@@ -1,3 +1,5 @@
+import { PokemonDetailStats } from "./pokemon-detail.model";
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -8,6 +10,8 @@ export interface Pokemon {
   stats: PokemonStats[];
   isSelected: boolean;
   initialIndex?: number;
+  formattedStats: PokemonDetailStats;
+  formattedTypes: string;
 }
 
 interface PokemonSprite {

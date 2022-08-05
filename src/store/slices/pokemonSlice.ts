@@ -24,6 +24,51 @@ const initialState: PokemonState = {
   isLoading: false,
 };
 
+const formatPokemonStats = (pokemon: Pokemon) => {
+  return pokemon.stats.reduce((acc, cur) => {
+    if (cur.stat.name === "attack") {
+      return {
+        ...acc,
+        attack: cur.base_stat,
+      };
+    }
+
+    if (cur.stat.name === "defense") {
+      return {
+        ...acc,
+        defense: cur.base_stat,
+      };
+    }
+
+    if (cur.stat.name === "special-attack") {
+      return {
+        ...acc,
+        specialAttack: cur.base_stat,
+      };
+    }
+
+    if (cur.stat.name === "special-defense") {
+      return {
+        ...acc,
+        specialDefense: cur.base_stat,
+      };
+    }
+
+    if (cur.stat.name === "speed") {
+      return {
+        ...acc,
+        speed: cur.base_stat,
+      };
+    }
+
+    return acc;
+  }, {});
+};
+
+const formatPokemonTypes = (pokemon: Pokemon) => {
+  return pokemon.types.map((element) => element.type.name).join(", ");
+};
+
 export const fetchPokemonsWithDetails = createAsyncThunk(
   "data/fetchPokemonsWithDetails",
   async (_, { dispatch }) => {
@@ -34,7 +79,15 @@ export const fetchPokemonsWithDetails = createAsyncThunk(
       data.map((pokemon) => getPokemonDetailService(pokemon.name))
     );
 
-    dispatch(setPokemons(pokemonWithDetails));
+    const pokemonsFormatted = pokemonWithDetails.map((element) => {
+      return {
+        ...element,
+        formattedStats: formatPokemonStats(element!),
+        formattedTypes: formatPokemonTypes(element!),
+      };
+    });
+
+    dispatch(setPokemons(pokemonsFormatted));
     dispatch(setLoading(false));
   }
 );

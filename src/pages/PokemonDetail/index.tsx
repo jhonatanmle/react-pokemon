@@ -26,51 +26,6 @@ const PokemonDetail = () => {
     )
   );
 
-  const typesString = pokemon?.types
-    .map((element) => element.type.name)
-    .join(", ");
-
-  const pokemonStats: PokemonDetailStats = pokemon
-    ? pokemon.stats.reduce((acc, cur) => {
-        if (cur.stat.name === "attack") {
-          return {
-            ...acc,
-            attack: cur.base_stat,
-          };
-        }
-
-        if (cur.stat.name === "defense") {
-          return {
-            ...acc,
-            defense: cur.base_stat,
-          };
-        }
-
-        if (cur.stat.name === "special-attack") {
-          return {
-            ...acc,
-            specialAttack: cur.base_stat,
-          };
-        }
-
-        if (cur.stat.name === "special-defense") {
-          return {
-            ...acc,
-            specialDefense: cur.base_stat,
-          };
-        }
-
-        if (cur.stat.name === "speed") {
-          return {
-            ...acc,
-            speed: cur.base_stat,
-          };
-        }
-
-        return acc;
-      }, {})
-    : {};
-
   const handleButtonClick = () => {
     if (pokemon) {
       dispatch(
@@ -142,22 +97,24 @@ const PokemonDetail = () => {
               <Descriptions.Item label="Altura">
                 {pokemon.height}
               </Descriptions.Item>
-              <Descriptions.Item label="Tipo">{typesString}</Descriptions.Item>
+              <Descriptions.Item label="Tipo">
+                {pokemon.formattedTypes}
+              </Descriptions.Item>
               <Descriptions.Item label="Estadísticas base">
                 Ataque:
-                <ProgressBar value={pokemonStats.attack!} />
+                <ProgressBar value={pokemon.formattedStats.attack!} />
                 <br />
                 Defensa:
-                <ProgressBar value={pokemonStats.defense!} />
+                <ProgressBar value={pokemon.formattedStats.defense!} />
                 <br />
                 Ataque especial:
-                <ProgressBar value={pokemonStats.specialAttack!} />
+                <ProgressBar value={pokemon.formattedStats.specialAttack!} />
                 <br />
                 Defensa especial:
-                <ProgressBar value={pokemonStats.specialDefense!} />
+                <ProgressBar value={pokemon.formattedStats.specialDefense!} />
                 <br />
                 Velocidad:
-                <ProgressBar value={pokemonStats.speed!} />
+                <ProgressBar value={pokemon.formattedStats.speed!} />
                 <br />
               </Descriptions.Item>
             </Descriptions>
