@@ -1,10 +1,16 @@
+import { Layout } from "antd";
 import "./App.scss";
+import Home from "./pages/Home";
+
+const { Content } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <h1>GG</h1>
-    </div>
+    <Layout className="App">
+      <Content className="content">
+        <Home />
+      </Content>
+    </Layout>
   );
 }
 
