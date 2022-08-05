@@ -5,7 +5,7 @@ import { routes } from "./routes";
 
 import Logo from "./assets/img/logo.png";
 
-const { Content, Header } = Layout;
+const { Content } = Layout;
 
 function App() {
   const elementRoutes = useRoutes(routes);
