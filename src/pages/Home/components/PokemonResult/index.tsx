@@ -1,11 +1,13 @@
 import { FC } from "react";
-import { PokemonCard } from "../../../../shared/components";
-import { useAppDispatch, useAppSelector } from "../../../../shared/hooks/store";
-import { Pokemon } from "../../../../shared/models/pokemon.model";
+import { useNavigate } from "react-router-dom";
+import { PokemonCard } from "@components/index";
+import { useAppDispatch } from "@shared/hooks/store";
+import { Pokemon } from "@shared/models/pokemon.model";
 import {
   addPokemonToBattle,
+  getPokemonDetail,
   removePokemonFromBattle,
-} from "../../../../store/slices/pokemonSlice";
+} from "@store/slices/pokemonSlice";
 
 import styles from "./style.module.scss";
 
@@ -15,17 +17,23 @@ type Props = {
   showAddIcon?: boolean;
 };
 
-const PokemonList: FC<Props> = ({
+const PokemonsResult: FC<Props> = ({
   pokemons,
   isSelected,
   showAddIcon = true,
 }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleIconClick = (id: number) => {
     dispatch(
       !isSelected ? addPokemonToBattle(id) : removePokemonFromBattle(id)
     );
+  };
+
+  const handleCardClick = (id: number) => {
+    navigate(`/pokemon/${id}`);
+    dispatch(getPokemonDetail(id));
   };
 
   return (
@@ -39,10 +47,11 @@ const PokemonList: FC<Props> = ({
           isSelected={isSelected}
           showIconButton={showAddIcon}
           onIconClick={handleIconClick}
+          onCardClick={handleCardClick}
         />
       ))}
     </section>
   );
 };
 
-export default PokemonList;
+export default PokemonsResult;

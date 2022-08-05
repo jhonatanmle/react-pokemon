@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Pokemon } from "../../shared/models/pokemon.model";
+import { Pokemon } from "@shared/models/pokemon.model";
 import {
   getPokemonDetailService,
   getPokemonsService,
-} from "../../services/pokemon.service";
-import { MAX_POKEMONS_IN_BATTLE } from "../../shared/constanst";
+} from "@services/pokemon.service";
+import { MAX_POKEMONS_IN_BATTLE } from "@shared/constants";
 
 interface PokemonState {
   pokemons: Pokemon[];
   pokemonsSearchList: Pokemon[];
   pokemonsCombatReady: Pokemon[];
+  pokemonDetail: Pokemon | null;
   showAddPokemon: boolean;
 }
 
@@ -17,6 +18,7 @@ const initialState: PokemonState = {
   pokemons: [],
   pokemonsSearchList: [],
   pokemonsCombatReady: [],
+  pokemonDetail: null,
   showAddPokemon: true,
 };
 
@@ -77,7 +79,6 @@ export const pokemonSlice = createSlice({
     },
     searchPokemon: (state, action) => {
       const search = action.payload;
-      console.log(search);
 
       const filteredPokemons = state.pokemonsSearchList.filter(
         (pokemon) =>
@@ -89,6 +90,15 @@ export const pokemonSlice = createSlice({
 
       state.pokemons = filteredPokemons;
     },
+    getPokemonDetail: (state, action) => {
+      const pokemon = state.pokemonsSearchList.find(
+        (element) => element.id === action.payload
+      );
+
+      if (pokemon) {
+        state.pokemonDetail = pokemon;
+      }
+    },
   },
 });
 
@@ -97,6 +107,7 @@ export const {
   addPokemonToBattle,
   removePokemonFromBattle,
   searchPokemon,
+  getPokemonDetail,
 } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

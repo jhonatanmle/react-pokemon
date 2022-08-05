@@ -15,6 +15,7 @@ type Props = {
   showIconButton?: boolean;
   isSelected?: boolean;
   onIconClick?: (id: number) => void;
+  onCardClick?: (id: number) => void;
 };
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -25,9 +26,15 @@ const PokemonCard: FC<Props> = ({
   showIconButton,
   isSelected,
   onIconClick,
+  onCardClick,
 }) => {
-  const handleIconClick = () => {
+  const handleIconClick = (event: any) => {
+    event.stopPropagation();
     onIconClick?.(id);
+  };
+
+  const handleCardClick = () => {
+    onCardClick?.(id);
   };
 
   const actionIcon = showIconButton ? (
@@ -37,7 +44,7 @@ const PokemonCard: FC<Props> = ({
   ) : null;
 
   return (
-    <Card extra={actionIcon}>
+    <Card onClick={handleCardClick} extra={actionIcon}>
       <div className={styles.card}>
         <Image
           src={image}

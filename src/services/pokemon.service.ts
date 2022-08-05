@@ -1,4 +1,4 @@
-import { Pokemon } from "../shared/models/pokemon.model";
+import { Pokemon } from "@shared/models/pokemon.model";
 import { httpClient } from "./config";
 
 export const getPokemonsService = async (): Promise<Pokemon[]> => {
