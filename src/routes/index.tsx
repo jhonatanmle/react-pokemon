@@ -12,6 +12,12 @@ export const paths = {
   pokemonDetails: "pokemon/:id",
 };
 
+const FallbackSkeleton = () => (
+  <div style={{ padding: "4rem" }}>
+    <Skeleton active />
+  </div>
+);
+
 export const routes = [
   {
     path: "",
@@ -28,7 +34,7 @@ export const routes = [
       {
         path: paths.pokemons,
         element: (
-          <Suspense fallback={<Skeleton active />}>
+          <Suspense fallback={<FallbackSkeleton />}>
             <PokemonList />
           </Suspense>
         ),
@@ -36,7 +42,7 @@ export const routes = [
       {
         path: paths.pokemonDetails,
         element: (
-          <Suspense fallback={<Skeleton active />}>
+          <Suspense fallback={<FallbackSkeleton />}>
             <PokemonDetail />
           </Suspense>
         ),
