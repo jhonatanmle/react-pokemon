@@ -7,9 +7,9 @@ export const PokemonList = lazy(() => import("@pages/PokemonList"));
 export const PokemonDetail = lazy(() => import("@pages/PokemonDetail"));
 
 export const paths = {
-  home: "",
-  pokemons: "pokemons",
-  pokemonDetails: "pokemon/:id",
+  home: "/",
+  pokemons: "/pokemones",
+  pokemonDetails: "/pokemon/:id",
 };
 
 const FallbackSkeleton = () => (
@@ -20,7 +20,7 @@ const FallbackSkeleton = () => (
 
 export const routes = [
   {
-    path: "",
+    path: "/",
     element: <Navigate to={paths.home} />,
   },
   {
@@ -47,7 +47,7 @@ export const routes = [
           </Suspense>
         ),
       },
+      { path: "*", element: <Navigate to={paths.home} /> },
     ],
   },
-  { path: "*", element: <Navigate to={paths.home} /> },
 ];
