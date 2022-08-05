@@ -1,0 +1,19 @@
+.searchContainer {
+  padding: 1rem;
+}
+
+.pokemonsCombatReady {
+  background-color: #eaffff;
+
+  .pokemonsCombatReadyTitle {
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 20px;
+  }
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  height: 500px;
+}

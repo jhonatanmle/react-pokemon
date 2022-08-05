@@ -1,0 +1,15 @@
+.pokemonsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 150px);
+  gap: 1rem;
+  padding: 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+  justify-content: center;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(auto-fit, 200px);
+    max-height: 800px;
+    justify-content: initial;
+  }
+}
