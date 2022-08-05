@@ -1,7 +1,10 @@
 import { Navigate } from "react-router-dom";
 import Home from "@pages/Home";
-import PokemonDetail from "@pages/PokemonDetail";
-import PokemonList from "@pages/PokemonList";
+import { lazy, Suspense } from "react";
+import { Skeleton } from "antd";
+
+export const PokemonList = lazy(() => import("@pages/PokemonList"));
+export const PokemonDetail = lazy(() => import("@pages/PokemonDetail"));
 
 export const paths = {
   home: "",
@@ -24,11 +27,19 @@ export const routes = [
       },
       {
         path: paths.pokemons,
-        element: <PokemonList />,
+        element: (
+          <Suspense fallback={<Skeleton active />}>
+            <PokemonList />
+          </Suspense>
+        ),
       },
       {
         path: paths.pokemonDetails,
-        element: <PokemonDetail />,
+        element: (
+          <Suspense fallback={<Skeleton active />}>
+            <PokemonDetail />
+          </Suspense>
+        ),
       },
     ],
   },

@@ -1,20 +1,3 @@
-.pokemonsCombatReady {
-  background-color: #eaffff;
-  height: initial;
-
-  @media screen and (min-width: 768px) {
-    height: 100vh;
-  }
-
-  .pokemonsCombatReadyTitle {
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 20px;
-  }
-}
-
-.empty {
-  display: grid;
-  place-items: center;
-  height: 500px;
+.outletContainer {
+  min-height: 450px;
 }

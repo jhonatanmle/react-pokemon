@@ -8,24 +8,26 @@ import { MAX_POKEMONS_IN_BATTLE } from "@shared/constants";
 
 interface PokemonState {
   pokemons: Pokemon[];
-  pokemonsSearchList: Pokemon[];
+  pokemonsCompleteList: Pokemon[];
   pokemonsCombatReady: Pokemon[];
   pokemonDetail: Pokemon | null;
   showAddPokemon: boolean;
+  isLoading: boolean;
 }
 
 const initialState: PokemonState = {
   pokemons: [],
-  pokemonsSearchList: [],
+  pokemonsCompleteList: [],
   pokemonsCombatReady: [],
   pokemonDetail: null,
   showAddPokemon: true,
+  isLoading: false,
 };
 
 export const fetchPokemonsWithDetails = createAsyncThunk(
   "data/fetchPokemonsWithDetails",
   async (_, { dispatch }) => {
-    // dispatch(setLoading(true));
+    dispatch(setLoading(true));
 
     const data = await getPokemonsService();
     const pokemonWithDetails = await Promise.all(
@@ -33,7 +35,7 @@ export const fetchPokemonsWithDetails = createAsyncThunk(
     );
 
     dispatch(setPokemons(pokemonWithDetails));
-    // dispatch(setLoading(false));
+    dispatch(setLoading(false));
   }
 );
 
@@ -43,7 +45,7 @@ export const pokemonSlice = createSlice({
   reducers: {
     setPokemons: (state, action) => {
       state.pokemons = action.payload;
-      state.pokemonsSearchList = action.payload;
+      state.pokemonsCompleteList = action.payload;
     },
     addPokemonToBattle: (state, action) => {
       const index = state.pokemons.findIndex(
@@ -80,7 +82,7 @@ export const pokemonSlice = createSlice({
     searchPokemon: (state, action) => {
       const search = action.payload;
 
-      const filteredPokemons = state.pokemonsSearchList.filter(
+      const filteredPokemons = state.pokemonsCompleteList.filter(
         (pokemon) =>
           pokemon.name.toLowerCase().includes(search?.toLowerCase()) &&
           !state.pokemonsCombatReady.some(
@@ -91,13 +93,16 @@ export const pokemonSlice = createSlice({
       state.pokemons = filteredPokemons;
     },
     getPokemonDetail: (state, action) => {
-      const pokemon = state.pokemonsSearchList.find(
+      const pokemon = state.pokemonsCompleteList.find(
         (element) => element.id === action.payload
       );
 
       if (pokemon) {
         state.pokemonDetail = pokemon;
       }
+    },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
   },
 });
@@ -108,6 +113,7 @@ export const {
   removePokemonFromBattle,
   searchPokemon,
   getPokemonDetail,
+  setLoading,
 } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

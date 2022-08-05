@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, LoadingOutlined } from "@ant-design/icons";
-import { Button, Descriptions, Image, Progress, Spin } from "antd";
+import { Button, Descriptions, Image, Spin } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@routes/index";
